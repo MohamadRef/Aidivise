@@ -1,2 +1,34 @@
-# Aidivise
-Aidivise – Your Smart Health Companion An AI-powered web app to log symptoms, track wellness, and generate health reports. Not a replacement for a doctor, but a helpful assistant in your health journey.
+# 🩺 HealthGPT – Smart Health Assistant
+
+HealthGPT is a smart and intuitive web application designed to help users track their health, log symptoms, and get AI-powered insights – all in one place. From symptom analysis to nutrition and hydration tracking, HealthGPT empowers you to manage your wellness effectively and share detailed reports with your doctor.
+
+> ⚠️ Note: HealthGPT is **not a substitute for professional medical advice**. Always consult a licensed healthcare provider for real medical concerns.
+
+---
+
+## 🚀 Features
+
+- 🧠 **AI Symptom Checker** – Enter symptoms and get AI-generated suggestions & guidance (non-medical).
+- 📅 **Health Log Tracker** – Record daily symptoms, mood, sleep, and pain levels.
+- 📄 **PDF Report Generator** – Create and export personalized health reports.
+- 🥦 **Nutrition Tracker** – Log meals and get a visual overview of your diet.
+- 💧 **Water Intake Monitor** – Track your daily hydration goals.
+- ⏰ **Reminders** – Stay on top of your habits and logging routines.
+
+---
+
+## 🖥️ Tech Stack
+
+| Layer      | Tech Used |
+|------------|-----------|
+| Frontend   | React + TypeScript, Tailwind CSS |
+| AI/LLM     | OpenAI GPT (for symptom analysis and summaries) |
+| Backend    | Supabase / Firebase (auth, database, storage) |
+| PDF Export | `jspdf` or `react-pdf` |
+| Charts     | `Recharts` |
+| Hosting    | Vercel / Netlify |
+
+---
+
+## 🧩 Project Structure
+
