@@ -1,6 +1,6 @@
 # 🩺 Aidvise – Smart Health Assistant
 
-HealthGPT is a smart and intuitive web application designed to help users track their health, log symptoms, and get AI-powered insights – all in one place. From symptom analysis to nutrition and hydration tracking, HealthGPT empowers you to manage your wellness effectively and share detailed reports with your doctor.
+Aidvise is a smart and intuitive web application designed to help users track their health, log symptoms, and get AI-powered insights – all in one place. From symptom analysis to nutrition and hydration tracking, Aidvise empowers you to manage your wellness effectively and share detailed reports with your doctor.
 
 > ⚠️ Note: HealthGPT is **not a substitute for professional medical advice**. Always consult a licensed healthcare provider for real medical concerns.
 
