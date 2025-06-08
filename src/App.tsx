@@ -1,9 +1,29 @@
+import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
 import Auth from './components/Auth';
+import Account from './components/account';
+import Layout from './components/layout';
 
 export default function App() {
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* 🔁 Background Video */}
+    <div className="relative min-h-screen overflow-hidden">
+      {/* 🔁 Background video */}
       <video
         autoPlay
         muted
@@ -15,13 +35,13 @@ export default function App() {
         Your browser does not support the video tag.
       </video>
 
-      {/* 🌑 Optional: dark overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
+      {/* 🌑 Dark overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-10" />
 
-      {/* 🧩 Login Form */}
-      <div className="relative z-20 w-full px-4">
-        <Auth />
-      </div>
+      {/* 🌐 Layout with nav/footer and main content */}
+      <Layout>
+        {session ? <Account /> : <Auth />}
+      </Layout>
     </div>
   );
 }
