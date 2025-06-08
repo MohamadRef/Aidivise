@@ -26,54 +26,55 @@ export default function Auth() { //from src/Components/Auth.tsx with supabase au
   }
 
   return ( // Main component rendering the authentication form
-    <div className="max-w-md w-full mx-auto p-8 rounded-2xl shadow-2xl backdrop-blur-sm bg-white/90 text-black">
-      <h2 className="text-3xl font-bold mb-6 text-center">Login / Sign Up</h2>
+  <div className="max-w-md w-full mx-auto p-8 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 text-white border border-white/20">
+  <h2 className="text-2xl font-semibold mb-6 text-center text-white">Login / Sign Up</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+  <input
+    type="email"
+    placeholder="Email"
+    className="w-full p-3 mb-4 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
 
-      <input // Input field for password
-        type="password"
-        placeholder="Password"
-        className="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      
-      <div className="flex space-x-4">  
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          className={`flex-1 p-3 rounded-lg text-white font-semibold transition ${
-            loading
-              ? 'bg-blue-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700'
-          }`}
-        >
-          {loading ? 'Logging in...' : 'Log In'}
-        </button>
+  <input
+    type="password"
+    placeholder="Password"
+    className="w-full p-3 mb-6 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
 
-        <button
-          onClick={handleSignUp}
-          disabled={loading}
-          className={`flex-1 p-3 rounded-lg text-white font-semibold transition ${
-            loading
-              ? 'bg-green-400 cursor-not-allowed'
-              : 'bg-green-600 hover:bg-green-700'
-          }`}
-        >
-          {loading ? 'Signing up...' : 'Sign Up'}
-        </button>
-      </div>
+  <div className="flex space-x-4">
+    <button
+      onClick={handleLogin}
+      disabled={loading}
+      className={`flex-1 p-3 rounded-md font-semibold transition text-white ${
+        loading
+          ? 'bg-blue-400 cursor-not-allowed'
+          : 'bg-blue-500 hover:bg-blue-600'
+      }`}
+    >
+      {loading ? 'Logging in...' : 'Log In'}
+    </button>
 
-      {message && ( // Display message after login or sign up
-        <p className="mt-6 text-center text-sm font-medium text-gray-700">{message}</p>
-      )}
-    </div>
+    <button
+      onClick={handleSignUp}
+      disabled={loading}
+      className={`flex-1 p-3 rounded-md font-semibold transition text-white ${
+        loading
+          ? 'bg-green-400 cursor-not-allowed'
+          : 'bg-green-500 hover:bg-green-600'
+      }`}
+    >
+      {loading ? 'Signing up...' : 'Sign Up'}
+    </button>
+  </div>
+
+  {message && (
+    <p className="mt-6 text-center text-sm font-medium text-red-400">{message}</p>
+  )}
+</div>
+
   );
 }
