@@ -33,6 +33,16 @@ body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 50s linear infinite;
+}
+.group-hover\:pause-animation:hover .animate-marquee {
+  animation-play-state: paused;
+}
 
 h1 {
   font-size: 3.2em;

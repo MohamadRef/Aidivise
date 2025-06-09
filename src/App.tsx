@@ -1,44 +1,57 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
-import ResetPassword from './pages/ResetPassword';
-
 import {
+  useNavigate,
+  useLocation,
   Routes,
   Route,
-  useNavigate,
-  useLocation
 } from 'react-router-dom';
 
 import Auth from './components/Auth';
 import Account from './components/account';
 import Layout from './components/layout';
+
 import Home from './pages/Home';
+import Symptoms from './pages/Symptoms';
+import Log from './pages/Log';
+import Reports from './pages/Reports';
+import Nutrition from './pages/Nutrition';
+import ResetPassword from './pages/ResetPassword';
 
 export default function App() {
   const [session, setSession] = useState<any>(null);
   const navigate = useNavigate();
-  const location = useLocation(); // 👈 to check current route
+  const location = useLocation();
 
   useEffect(() => {
+    // Check current session on first load
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      if (data.session) navigate('/home');
+
+      // Only redirect to /home if user is on the root path
+      if (data.session && location.pathname === '/') {
+        navigate('/home');
+      }
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      if (session) navigate('/home');
-      else navigate('/');
+
+      if (session && location.pathname === '/') {
+        navigate('/home');
+      } else if (!session) {
+        navigate('/');
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* 🎥 Show video background only on the login page */}
+      {/* 🎥 Show background video only on root auth page */}
       {location.pathname === '/' && (
         <>
           <video
@@ -54,10 +67,14 @@ export default function App() {
         </>
       )}
 
-      {/* 🌐 Main content routes */}
+      {/* 🧭 Routes */}
       <Routes>
         <Route path="/" element={<Layout><Auth /></Layout>} />
         <Route path="/home" element={<Layout><Home /></Layout>} />
+        <Route path="/symptoms" element={<Layout><Symptoms /></Layout>} />
+        <Route path="/log" element={<Layout><Log /></Layout>} />
+        <Route path="/reports" element={<Layout><Reports /></Layout>} />
+        <Route path="/nutrition" element={<Layout><Nutrition /></Layout>} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </div>

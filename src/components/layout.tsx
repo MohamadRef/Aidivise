@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <h1 className="text-xl font-bold tracking-wide">Aidvise</h1>
           <div className="flex items-center space-x-4">
-            <a href="#" className="hover:underline text-sm">Home</a>
+          <a href="#" className="hover:underline text-sm">Home</a>
             <a href="#" className="hover:underline text-sm">About</a>
             <a href="#" className="hover:underline text-sm">Contact</a>
             {session && (
