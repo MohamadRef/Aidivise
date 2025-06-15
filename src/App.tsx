@@ -76,6 +76,7 @@ export default function App() {
         <Route path="/reports" element={<Layout><Reports /></Layout>} />
         <Route path="/nutrition" element={<Layout><Nutrition /></Layout>} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        
       </Routes>
     </div>
   );
