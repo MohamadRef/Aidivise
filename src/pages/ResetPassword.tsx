@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
-export default function ResetPassword() {
+export default function ResetPassword() { // This component handles the password reset functionality.
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
   const [sessionChecked, setSessionChecked] = useState(false);
@@ -23,7 +23,7 @@ export default function ResetPassword() {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
-
+  // this effect checks if the user is authenticated and sets sessionChecked to true if they are.
   async function handleUpdatePassword() {
     const { error } = await supabase.auth.updateUser({ password: newPassword });
 
@@ -33,7 +33,7 @@ export default function ResetPassword() {
       navigate('/'); // Redirect to login page
     }
   }
-
+  // This function updates the user's password using Supabase's updateUser method and handles any errors that may occur.
   return sessionChecked ? (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 text-black">
       <div className="bg-white p-8 rounded shadow w-full max-w-md">

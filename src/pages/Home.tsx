@@ -73,13 +73,6 @@ export default function Home() {
               path: '/log',
             },
             {
-              title: '📄 PDF Report Generator',
-              desc: 'Generate a downloadable health summary for your doctor.',
-              color: 'text-purple-300',
-              hover: 'hover:bg-purple-600',
-              path: '/reports',
-            },
-            {
               title: '🥦 Nutrition & 💧 Hydration',
               desc: 'Log your meals and water intake for complete wellness tracking.',
               color: 'text-yellow-300',

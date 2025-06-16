@@ -14,7 +14,6 @@ import Layout from './components/layout';
 import Home from './pages/Home';
 import Symptoms from './pages/Symptoms';
 import Log from './pages/Log';
-import Reports from './pages/Reports';
 import Nutrition from './pages/Nutrition';
 import ResetPassword from './pages/ResetPassword';
 
@@ -69,15 +68,14 @@ export default function App() {
 
       {/* 🧭 Routes */}
       <Routes>
-        <Route path="/" element={<Layout><Auth /></Layout>} />
-        <Route path="/home" element={<Layout><Home /></Layout>} />
-        <Route path="/symptoms" element={<Layout><Symptoms /></Layout>} />
-        <Route path="/log" element={<Layout><Log /></Layout>} />
-        <Route path="/reports" element={<Layout><Reports /></Layout>} />
-        <Route path="/nutrition" element={<Layout><Nutrition /></Layout>} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        
+          <Route path="/" element={<Layout><Auth /></Layout>} />
+          <Route path="/home" element={<Layout><Home /></Layout>} />
+          <Route path="/symptoms" element={<Layout><Symptoms /></Layout>} />
+          <Route path="/log" element={<Layout><Log /></Layout>} />
+          <Route path="/nutrition" element={<Layout><Nutrition /></Layout>} />
+          <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
+
     </div>
   );
 }
