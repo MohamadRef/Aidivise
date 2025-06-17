@@ -1,5 +1,6 @@
+// src/components/layout.tsx
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -7,15 +8,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-    });
+    // Get initial session
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
 
-    return () => listener.subscription.unsubscribe();
+    // Cleanup subscription
+    return () => subscription.unsubscribe();
   }, []);
 
   async function handleLogout() {
@@ -23,35 +25,68 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     navigate('/');
   }
 
+  const base = "text-sm px-3 py-2 rounded-md transition-colors duration-200";
+  const active = "bg-teal-500 text-black";
+  const inactive = "text-white hover:bg-gray-800";
+
+  function handleProtectedNav(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) {
+    if (!session) {
+      e.preventDefault();
+      window.alert("⚠️ You must be logged in or registered to access that page.");
+    }
+  }
+
+  const links: { to: string; label: string }[] = [
+    { to: "/home", label: "Home" },
+    { to: "/symptoms", label: "Symptoms" },
+    { to: "/log", label: "Log" },
+    { to: "/nutrition", label: "Nutrition" },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col z-20 relative">
-      {/* Header */}
-      <header className="w-full px-6 py-4 bg-black/60 text-white backdrop-blur-md shadow-md z-50">
+    <div className="min-h-screen flex flex-col relative z-20">
+      <header className="w-full px-6 py-4 bg-black/60 text-white backdrop-blur-md shadow-md fixed top-0 left-0 right-0 z-30">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-xl font-bold tracking-wide">Aidvise</h1>
-          <div className="flex items-center space-x-4">
-          <a href="#" className="hover:underline text-sm">Home</a>
-            <a href="#" className="hover:underline text-sm">About</a>
-            <a href="#" className="hover:underline text-sm">Contact</a>
-            {session && (
-              <button
-                onClick={handleLogout}
-                className="ml-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm"
+          {/* Logo */}
+          <NavLink to="/home" className="text-xl font-bold tracking-wide hover:text-teal-400 transition-colors">
+            Aidvise
+          </NavLink>
+
+          {/* Navigation Links */}
+          <nav className="flex items-center space-x-4">
+            {links.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={handleProtectedNav}
+                className={({ isActive }) =>
+                  `${base} ${isActive ? active : inactive}`
+                }
               >
-                Logout
-              </button>
-            )}
-          </div>
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Logout button */}
+          {session && (
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200 text-sm"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </header>
 
-      {/* Main content */}
-      <main className="flex-1 flex items-center justify-center px-4">
+      <main className="flex-1 px-4 pt-20 pb-4">
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="w-full px-6 py-4 text-sm text-center text-white bg-black/60 backdrop-blur-md z-50">
+      <footer className="w-full px-6 py-4 text-sm text-center text-white bg-black/60 backdrop-blur-md">
         © {new Date().getFullYear()} Aidvise. All rights reserved.
       </footer>
     </div>

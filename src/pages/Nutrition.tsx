@@ -197,8 +197,7 @@ export default function Log() {
                 <span>Add New Health Entry</span>
                 <Zap className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                 
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10"></div>
-              </button>
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10"></div>              </button>
             </div>
           )}
         </div>
