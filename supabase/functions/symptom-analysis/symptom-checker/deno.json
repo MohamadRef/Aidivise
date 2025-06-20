@@ -1,0 +1,9 @@
+// supabase/functions/symptom-checker/deno.json
+{
+  "importMap": "import_map.json",
+  "env": [
+    "OPENAI_API_KEY",
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY"
+  ]
+}

@@ -10,8 +10,6 @@ import {
   Clock,
   Zap
 } from 'lucide-react';
-import { pdf } from '@react-pdf/renderer';
-import PdfReport from '../components/PdfReport';
 
 // OpenAI API call for symptom analysis
 const analyzeSymptoms = async (symptoms: string): Promise<string> => {
@@ -136,18 +134,45 @@ export default function Symptoms() {
   // Generate & download PDF via React-PDF
   const handleDownloadPdf = async () => {
     if (!analysis) return;
-    const blob = await pdf(
-      <PdfReport
-        symptoms={input}
-        suggestion={analysis}
-        patientName="Patient"
-        reportId={undefined}
-      />
-    ).toBlob();
+    
+    const htmlContent = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="UTF-8">
+      <title>AI Health Assessment Report</title>
+      <style>
+          body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+          .header { border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 30px; }
+          .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+          .warning { background-color: #fef3c7; border: 1px solid #fbbf24; padding: 15px; border-radius: 8px; }
+      </style>
+  </head>
+  <body>
+      <div class="header">
+          <h1>AI Health Assessment</h1>
+          <p>Generated: ${new Date().toLocaleDateString()}</p>
+      </div>
+      <div class="section">
+          <h2>Reported Symptoms</h2>
+          <p>${input}</p>
+      </div>
+      <div class="section">
+          <h2>AI Analysis</h2>
+          <pre style="white-space: pre-wrap; font-family: inherit;">${analysis.replace(/[^\x00-\x7F]/g, "")}</pre>
+      </div>
+      <div class="warning">
+          <h3>Important Medical Disclaimer</h3>
+          <p>This AI-generated assessment is for informational purposes only and should not be considered as professional medical advice, diagnosis, or treatment.</p>
+      </div>
+  </body>
+  </html>`;
+  
+    const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `aidvise-health-report-${new Date().toISOString().split('T')[0]}.pdf`;
+    link.download = `aidvise-health-report-${new Date().toISOString().split('T')[0]}.html`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
