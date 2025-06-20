@@ -1,19 +1,32 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Heart, Moon, Zap, Smile, Frown, Meh, Edit3, Trash2, Save, Plus, Activity, Brain, Clock, AlertTriangle, TrendingUp } from 'lucide-react';
 
+type Log = {
+  id: number;
+  date: string;
+  symptoms: string;
+  mood: string;
+  sleep_hours: number;
+  pain_level: number;
+};
+
+type FocusedField = 'date' | 'symptoms' | 'mood' | 'sleep' | 'pain' | null;
+
 export default function Log() {
   const [form, setForm] = useState({
     date: '',
     symptoms: '',
     mood: '',
     sleep_hours: '',
-    pain_level: '',
+    pain_level: ''
   });
-  const [logs, setLogs] = useState([]);
+  
+  const [logs, setLogs] = useState<Log[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [focusedField, setFocusedField] = useState(null);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [focusedField, setFocusedField] = useState<FocusedField>(null);
   const [showForm, setShowForm] = useState(false);
 
   // Mock data for demo
@@ -45,7 +58,8 @@ export default function Log() {
     }, 1000);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
     e.preventDefault();
 
     const sleep = Number(form.sleep_hours);
@@ -88,7 +102,7 @@ export default function Log() {
     }, 1500);
   };
 
-  const handleEdit = (log) => {
+  const handleEdit = (log: Log) => {
     setForm({
       date: log.date,
       symptoms: log.symptoms,
@@ -100,13 +114,13 @@ export default function Log() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     if (confirm('Are you sure you want to delete this log?')) {
       setLogs(prev => prev.filter(log => log.id !== id));
     }
   };
 
-  const getMoodIcon = (mood) => {
+  const getMoodIcon = (mood: string) => {
     switch (mood.toLowerCase()) {
       case 'excellent': case 'great': case 'good': return <Smile className="w-5 h-5 text-green-400" />;
       case 'fair': case 'okay': case 'neutral': return <Meh className="w-5 h-5 text-yellow-400" />;
@@ -115,13 +129,13 @@ export default function Log() {
     }
   };
 
-  const getPainColor = (level) => {
+  const getPainColor = (level: number) => {
     if (level <= 3) return 'text-green-400';
     if (level <= 6) return 'text-yellow-400';
     return 'text-red-400';
   };
 
-  const getSleepColor = (hours) => {
+  const getSleepColor = (hours: number) => {
     if (hours >= 7 && hours <= 9) return 'text-green-400';
     if (hours >= 6 || hours <= 10) return 'text-yellow-400';
     return 'text-red-400';
@@ -477,7 +491,7 @@ export default function Log() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(180deg); }
