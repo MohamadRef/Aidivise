@@ -30,7 +30,7 @@ export default function Log() {
   const [showForm, setShowForm] = useState(false);
 
   // Mock data for demo
-  const mockLogs = [
+  const mockLogs: Log[] = [
     {
       id: 1,
       date: '2024-06-15',
@@ -59,7 +59,6 @@ export default function Log() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
     e.preventDefault();
 
     const sleep = Number(form.sleep_hours);
@@ -79,14 +78,14 @@ export default function Log() {
     setTimeout(() => {
       if (editId) {
         // Update existing log
-        setLogs(prev => prev.map(log => 
+        setLogs(prev => prev.map((log: Log) => 
           log.id === editId 
             ? { ...form, id: editId, sleep_hours: sleep, pain_level: pain }
             : log
         ));
       } else {
         // Add new log
-        const newLog = {
+        const newLog: Log = {
           ...form,
           id: Date.now(),
           sleep_hours: sleep,
@@ -116,7 +115,7 @@ export default function Log() {
 
   const handleDelete = async (id: number) => {
     if (confirm('Are you sure you want to delete this log?')) {
-      setLogs(prev => prev.filter(log => log.id !== id));
+      setLogs(prev => prev.filter((log: Log) => log.id !== id));
     }
   };
 
@@ -237,7 +236,7 @@ export default function Log() {
                 </button>
               </div>
 
-              <div className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Date Input */}
                 <div className="relative">
                   <label className="block text-sm font-medium text-slate-300 mb-2">Date</label>
@@ -350,7 +349,7 @@ export default function Log() {
                 {/* Submit Button */}
                 <div className="text-center pt-4">
                   <button
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={loading}
                     className={`group inline-flex items-center gap-3 ${
                       editId 
@@ -371,7 +370,7 @@ export default function Log() {
                     )}
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         )}
@@ -403,7 +402,7 @@ export default function Log() {
             </div>
           ) : (
             <div className="grid gap-6">
-              {logs.map((log, index) => (
+              {logs.map((log: Log, index: number) => (
                 <div 
                   key={log.id} 
                   className="backdrop-blur-xl bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:border-emerald-400/30"
