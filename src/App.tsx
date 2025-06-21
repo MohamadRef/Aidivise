@@ -17,7 +17,7 @@ import Nutrition from './pages/Nutrition';
 import ResetPassword from './pages/ResetPassword';
 
 export default function App() {
-  const [setSession] = useState<any>(null);
+  const [, setSession] = useState<any>(null); // ✅ CORRECT
   const navigate = useNavigate();
   const location = useLocation();
 
