@@ -10,8 +10,6 @@ import {
   Star,
   Play,
   Pause,
-  Volume2,
-  VolumeX
 } from 'lucide-react';
 
 export default function Home() {

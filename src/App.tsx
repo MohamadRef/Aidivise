@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 
 import Auth from './components/Auth';
-import Account from './components/account';
 import Layout from './components/layout';
 
 import Home from './pages/Home';
@@ -18,7 +17,7 @@ import Nutrition from './pages/Nutrition';
 import ResetPassword from './pages/ResetPassword';
 
 export default function App() {
-  const [session, setSession] = useState<any>(null);
+  const [setSession] = useState<any>(null);
   const navigate = useNavigate();
   const location = useLocation();
 

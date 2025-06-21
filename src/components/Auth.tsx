@@ -1,6 +1,5 @@
 // src/components/Auth.tsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 type LoadingAction = '' | 'login' | 'signup';
@@ -11,7 +10,6 @@ export default function Auth() {
   const [message, setMessage] = useState('');
   const [loadingAction, setLoadingAction] = useState<LoadingAction>('');
   const [showReset, setShowReset] = useState(false);
-  const navigate = useNavigate();
 
   async function handleSignUp() {
     setLoadingAction('signup');
